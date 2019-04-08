@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .left, .right{
+      width: 300px;
+    }
+
+    .left {
+      background: red;
+    }
+    .right {
+      background: blue;
+    }
+    .center {
+      background: yellow;
+    }
+    .left, .right, .center {
+      height: 100px;
+    }
+    .float, .absolute, .flex, .table, .grid {
+      border-bottom: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<!-- float -->
+<style>
+ .float .left{
+    float: left;
+  }
+  .float .right {
+    float: right;
+  }
+</style>
+<div class="float">
+  <div class="left"></div>
+  <div class="right"></div>
+  <div class="center"></div>
+</div>
+<!-- 绝对定位 -->
+<style>
+  .absolute {
+    position: relative;
+  }
+  .absolute .left {
+    position: absolute;
+    left: 0;
+  }
+  .absolute .right {
+    position: absolute;
+    right: 0;
+  }
+</style>
+<div class="absolute">
+  <div class="left"></div>
+  <div class="right"></div>
+  <div class="center"></div>
+</div>
+<!-- flex -->
+<style>
+.flex {
+  display: flex;
+}
+.flex .center {
+  flex: 1;
+}
+</style>
+<div class="flex">
+  <div class="left"></div>
+  <div class="center"></div>
+  <div class="right"></div>
+</div>
+<!-- table -->
+<style>
+.table {
+  display: table;
+}
+.table .left, .table .center, .table .right {
+  display: table-cell;
+}
+.table .left, .table .right{
+  min-width:300px;
+}
+.table .center {
+  width: 100%;
+}
+</style>
+<div class="table">
+  <div class="left"></div>
+  <div class="center"></div>
+  <div class="right"></div>
+</div>
+<!-- grid -->
+<style>
+.grid {
+  display: grid;
+  grid-template-columns: 300px auto 300px;
+}
+</style>
+<div class="grid">
+  <div class="left"></div>
+  <div class="center"></div>
+  <div class="right"></div>
+</div>
+</body>
+</html>
