@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    (function() {
+      {
+        let [a, b, c] = [1, 2, 3]
+        console.log(a, b, c)
+      }
+
+      {
+        // 扩展运算和结构赋值的对比
+        let [a, ...b] = [1, 2, 3]
+        console.log(a, b)
+        
+        console.log(...[1, 2, 3])
+        console.log(...[{a: 1}, {b: 3}])
+
+        // ...rest参数
+        function add (...values) {
+          let sum = 0
+          for(let val of values) {
+            sum += val
+          }
+          console.info(sum)
+          return sum
+        }
+
+        add(2, 5, 3)
+
+      }
+
+      {
+        // set结构，数据的结构赋值
+        // 只要某种数据结构具有Iterator结构的,都可以使用数组的解构赋值
+        let [a, b, c] = new Set(['a', 'b', 'c'])
+        console.log(a)
+      }
+
+      {
+        // 使用Generator实现长轮询
+
+      }
+      {
+        function* fibs() {
+          let a = 0;
+          let b = 1;
+          while (true) {
+            yield a;
+            [a, b] = [b, a+b]
+          }
+        }
+
+        let [first, second, third, fourth, fifth, sixth] = fibs()
+      }
+      {
+        // 字符串遍历 for...of
+        for (let value of 'foo') {
+          console.log(value)
+        }
+      }
+      {
+        // Math Math.ceil 向上取整。Math.floor向下取整、Math.round四舍五入
+        // Math.trunc 去除一个数的小数部分
+        // Math.sign 判断一个数是正数、负数还是0
+        // Math.cbrt() 计算立方根
+      }
+
+      {
+        /**
+         *  1.箭头函数的this对象,作用域是定义时的,而不是使用时的
+         *  2. 不能使用new，因此不能做构造函数
+         *  3. 箭头函数没有arguments
+         *  4.箭头函数不能使用yeild 也就是说不能作为generator函数
+         **/
+      }
+      {
+        /**
+         * 扩展运算符的应用
+         * 1.复制数组，数组是符合数据类型，直接复制的话指向底层数据结构的指针。
+         * const a2 = [...a1]
+         **/
+      }
+      {
+        // ES2020链判断运算符
+        const message = {
+          first: {
+            a: '1'
+          }
+        }
+
+        if (message && message.first && message.first.a) {
+          console.log('11111111')
+        }
+
+        if (message?.first?.b) {
+          console.log('链判断运算符')
+        } else {
+          console.log('9999')
+        }
+
+        // 链判断运算符写法：
+        // obj?.prop
+        // obj?.[expr]
+        // func?.(...args) 
+        // myForm.checkValidity?.() === false
+        
+      }
+
+      {
+        const obj = {a: 1}
+        const objPrototype = {b: 2}
+        console.log(obj.__proto__)
+        Object.setPrototypeOf(obj, objPrototype)
+        console.log(obj.b)
+      }
+
+      {
+        // set
+        const s = new Set([1, 1, 3, 4])
+        s.add(5)
+        console.log(`has: ${s.has(5)}`)
+        s.delete(1)
+        console.log(s)
+
+        /**
+         * set的遍历操作
+         * keys(),values(),entries(),forEach*()
+         **/
+        for(let item of s.keys()) {
+          console.log(item)
+        }
+      }
+
+      {
+        function getFoo() {
+          return new Promise((resolve, reject) => {
+            resolve('foo')
+          })
+        }
+
+        const g = function* () {
+          try {
+            const foo = yield getFoo()
+            console.log(foo)
+          } catch(e) {
+            console.log(e)
+          }
+        }
+
+        function run (generator) {
+          const it = generator()
+
+          function go (result) {
+            console.log(result)
+            if (result.done) return result.value;
+
+            return result.value.then((value) => {
+              console.log(value)
+              return go(it.next(value));
+            }, (error) => {
+              return go(it.throw(error));
+            }) 
+          }
+
+          go(it.next())
+        }
+
+        run(g)
+      }
+
+      {
+        var it = makeIterator(['a', 'b'])
+        console.log(it.next())
+        console.log(it.next())
+        console.log(it.next())
+
+        function makeIterator(array) {
+          var nextIndex = 0
+          return {
+            next: function() {
+              console.log('----')
+              return nextIndex < array.length ? {value: array[nextIndex++], done: false} : {value: undefined, done: true}
+            }
+          }
+        }
+      }
+
+      {
+        // 异步任务封装
+        const person = sex => {
+          console.log('2222222')
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const data = {
+                sex,
+                name: 'xuying',
+                age: 18
+              }
+              console.log('33333333')
+              resolve(data)
+            }, 2000)
+          })
+        }
+
+        function* gen() {
+          const data = yield person('girl')
+          console.log(data)
+        }
+
+        const g = gen()
+        const next1 = g.next()
+        console.log('111111111')
+        next1.value.then(data => {
+          console.log(data)
+        })
+      }
+
+      {
+        // 手写一个promise对象
+      }
+    })()
+  </script>
+</body>
+</html>

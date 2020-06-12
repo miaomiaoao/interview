@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    (function() {
+      const array = [1, 1, 'a', 'a', null, null, undefined, undefined, NaN, NaN, {a: 1}, {a: 1}, {}, {}, true, true]
+      console.log(uniqueIndexOf(array))
+      console.log(uniqueIndexOf(array))
+      console.log(uniqueHasOwnPrototypeOf(array))
+      
+    })()
+    /*
+      * es6中的set,无法给对象去重
+    */
+    function uniqueSet(array) {
+      return Array.from(new Set(array))
+    }
+
+    /**
+    * for嵌套for，然后用splice去重
+    * 如果第一个等于第二个,则删除第二个
+    */
+    function uniqueFor(array) {
+      for(var i = 0; i < array.length; i++) {
+        for (var j = i+1; j < array.length; j++) {
+          if (array[i] == array[j]) {
+            array.splice(j, 1);
+            j--;
+          }
+        }
+      }
+      return array
+    }
+
+    /**
+    * 使用indexOf或者includes去重
+    */
+    function uniqueIndexOf(array) {
+      const arr = []
+      array.forEach(item => {
+        if (arr.indexOf(item) == -1) {
+          arr.push(item)
+        }
+      })
+      return arr
+    }
+    /**
+    * 使用sort排序,然后根据排序后的结果进行遍历和相邻元素对比
+    */
+    function uniqueSort(array) {
+      array = array.sort()
+      for (var i = 1; i < arr.length; i++) {
+        if (arr[i] !== arr[i-1]) {
+            arrry.push(arr[i]);
+        }
+      }
+      return arrry;
+    }
+    /**
+    * hasOwnprototypeOf()对象的自身是否含有某个属性
+    */
+    function uniqueHasOwnPrototypeOf(array) {
+      var obj = {};
+      return array.filter(function(item, index, arr){
+        return obj.hasOwnProperty(typeof item + item) ? false : (obj[typeof item + item] = true)
+      })
+    }
+  </script>
+</body>
+</html>
